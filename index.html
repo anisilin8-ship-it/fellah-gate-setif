@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الفلاح - سطيف</title>
+    <style>
+        /* التنسيق العام ليناسب تصميمك الاحترافي */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; padding: 0;
+            background: url('background.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1; }
+        
+        .container { 
+            position: relative; z-index: 2;
+            background: rgba(255, 255, 255, 0.9); 
+            max-width: 450px; width: 90%;
+            padding: 30px; border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); 
+            text-align: center;
+        }
+        h2 { color: #2c3e50; margin-bottom: 5px; }
+        p.subtitle { color: #27ae60; font-weight: bold; margin-bottom: 25px; font-size: 14px; }
+        
+        input { 
+            width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; 
+            font-size: 18px; text-align: center; box-sizing: border-box; margin-bottom: 15px;
+        }
+        button { 
+            width: 100%; background-color: #27ae60; color: white; padding: 15px; 
+            border: none; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #219150; }
+
+        #result { 
+            margin-top: 25px; text-align: right; display: none; 
+            padding: 15px; border-top: 2px solid #27ae60; background: #f9f9f9; border-radius: 10px;
+        }
+        .info-item { margin-bottom: 10px; font-size: 16px; color: #333; }
+        .label { font-weight: bold; color: #27ae60; margin-left: 5px; }
+        .error { color: #e74c3c; font-weight: bold; display: none; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+    <h2>🌿 بوابة الفلاح سطيف</h2>
+    <p class="subtitle">التعاونية للحبوب والبقول الجافة - CCLS SETIF</p>
+    
+    <input type="text" id="codepart" placeholder="أدخل كود الشريك (Codepart)">
+    <button onclick="searchUser()">دخول للحساب</button>
+
+    <div id="errorMsg" class="error">❌ الفلاح غير موجود في السجلات</div>
+
+    <div id="result">
+        <div class="info-item"><span class="label">اللقب:</span> <span id="nom"></span></div>
+        <div class="info-item"><span class="label">الاسم:</span> <span id="prenom"></span></div>
+        <div class="info-item"><span class="label">ابن:</span> <span id="fils"></span></div>
+        <div class="info-item"><span class="label">البلدية:</span> <span id="com"></span></div>
+        <div class="info-item"><span class="label">الولاية:</span> <span id="wil"></span></div>
+        <div class="info-item"><span class="label">الهاتف:</span> <span id="tel"></span></div>
+    </div>
+</div>
+
+<script>
+    async function searchUser() {
+        const id = document.getElementById('codepart').value.trim();
+        const resultDiv = document.getElementById('result');
+        const errorDiv = document.getElementById('errorMsg');
+        
+        if (!id) { alert("يرجى إدخال الكود أولاً"); return; }
+
+        try {
+            // الاتصال بالسيرفر عبر الرابط النسبي
+            const res = await fetch(`/search/${id}`);
+            
+            if (!res.ok) {
+                errorDiv.style.display = 'block';
+                resultDiv.style.display = 'none';
+                return;
+            }
+
+            const data = await res.json();
+            errorDiv.style.display = 'none';
+
+            // ملء البيانات في الواجهة
+            document.getElementById('nom').innerText = data.Nompart || "---";
+            document.getElementById('prenom').innerText = data.Prenompart || "---";
+            document.getElementById('fils').innerText = data.Filsde || "---";
+            document.getElementById('com').innerText = data.Libcom || "---";
+            document.getElementById('wil').innerText = data.Libwil || "---";
+            document.getElementById('tel').innerText = data["Tel. Mob."] || "غير متوفر";
+            
+            resultDiv.style.display = 'block';
+        } catch (err) {
+            alert("مشكلة في الاتصال بالسيرفر");
+        }
+    }
+</script>
+
+</body>
+</html>
