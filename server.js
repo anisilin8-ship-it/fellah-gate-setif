@@ -13,32 +13,38 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// دالة البحث في ملف CSV
 const findDeliveries = (targetCode) => {
     return new Promise((resolve, reject) => {
         const results = [];
         const filePath = path.join(__dirname, 'deliveries.csv');
+        
         if (!fs.existsSync(filePath)) return reject('ملف البيانات غير موجود');
 
-        // أضفنا utf-8 لضمان استقرار قراءة الأرقام
+        // استخدام utf-8 وقراءة السطور بدقة
         fs.createReadStream(filePath, { encoding: 'utf8' })
             .pipe(csv({ separator: ';' }))
             .on('data', (row) => {
-                // التأكد من مطابقة كود الشريك بدقة
-                if (row.CodePart && row.CodePart.trim() === targetCode.trim()) {
+                // تصفية صارمة: إزالة الفراغات والتأكد من مطابقة الكود تماماً
+                const cleanRowCode = row.CodePart ? row.CodePart.toString().trim() : "";
+                const cleanTargetCode = targetCode.toString().trim();
+
+                if (cleanRowCode === cleanTargetCode) {
                     results.push(row);
                 }
             })
-            .on('end', () => resolve(results))
+            .on('end', () => {
+                console.log(`تم العثور على ${results.length} سجلات للكود: ${targetCode}`);
+                resolve(results);
+            })
             .on('error', (err) => reject(err));
     });
 };
 
-// رابط البحث API
 app.get('/api/search/:code', async (req, res) => {
     try {
         const results = await findDeliveries(req.params.code);
         if (results.length > 0) {
+            // نأخذ الاسم من أول نتيجة صحيحة فقط
             res.json({
                 success: true,
                 farmerName: results[0].Nom,
@@ -48,6 +54,7 @@ app.get('/api/search/:code', async (req, res) => {
             res.status(404).json({ success: false, message: 'الكود غير موجود' });
         }
     } catch (error) {
+        console.error("خطأ في البحث:", error);
         res.status(500).json({ success: false, message: error.message });
     }
 });
