@@ -53,6 +53,11 @@ app.get('/api/search/:code', async (req, res) => {
     }
 });
 
+// --- إضافة رابط خريطة الموقع (Sitemap) هنا ---
+app.get('/sitemap.xml', (req, res) => {
+    res.sendFile(path.join(__dirname, 'sitemap.xml'));
+});
+
 const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`✅ النظام جاهز!`);
