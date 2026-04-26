@@ -20,19 +20,19 @@ const findDeliveries = (targetCode) => {
         
         if (!fs.existsSync(filePath)) return reject('ملف البيانات غير موجود');
 
+        // استخدام الفاصلة العادية وتجاهل علامات الاقتباس تلقائياً
         fs.createReadStream(filePath, { encoding: 'utf8' })
-            .pipe(csv({ separator: ';' }))
+            .pipe(csv({ separator: ',' })) 
             .on('data', (row) => {
-                // 1. استخراج الكود من السطر وتنظيفه
+                // تنظيف كود الشريك من أي فراغات أو رموز زائدة
                 let rowCode = row.CodePart ? row.CodePart.toString().trim() : "";
 
-                // 2. معالجة مشكلة التنسيق العلمي (E+14) القادمة من الإكسيل
-                // هذا الجزء يضمن تحويل 1.91E+14 إلى الرقم الكامل قبل المقارنة
+                // معالجة التنسيق العلمي (E+14) في حال وجوده
                 if (rowCode.includes('E+')) {
                     rowCode = BigInt(Math.round(Number(rowCode))).toString();
                 }
 
-                // 3. المقارنة الصارمة (لا يقبل النتيجة إلا إذا تطابق الكود تماماً)
+                // مطابقة الكود المدخل مع الكود في السطر
                 if (rowCode === targetCode.trim()) {
                     results.push(row);
                 }
@@ -48,7 +48,7 @@ app.get('/api/search/:code', async (req, res) => {
         if (results.length > 0) {
             res.json({
                 success: true,
-                farmerName: results[0].Nom,
+                farmerName: results[0].nom, // مطابقة لعمود nom في ملفك
                 data: results
             });
         } else {
@@ -57,10 +57,6 @@ app.get('/api/search/:code', async (req, res) => {
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
-});
-
-app.get('/sitemap.xml', (req, res) => {
-    res.sendFile(path.join(__dirname, 'sitemap.xml'));
 });
 
 const PORT = process.env.PORT || 3001;
