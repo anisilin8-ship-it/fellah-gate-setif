@@ -9,234 +9,181 @@
     <style>
         :root { 
             --gold: #fbbf24; 
-            --green: #10b981; 
-            --glass: rgba(0, 0, 0, 0.8); 
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --emerald: #10b981; 
+            --glass-deep: rgba(0, 0, 0, 0.75);
+            --border: rgba(255, 255, 255, 0.15);
+            --glow: 0 0 20px rgba(251, 191, 36, 0.3);
         }
 
-        body { 
-            margin: 0; padding: 0; 
-            background: url('background.jpg') no-repeat center center fixed; 
-            background-size: cover; 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            color: white; 
-            min-height: 100vh;
-            /* تفعيل النزول على الهاتف */
-            overflow-y: auto; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        html, body {
+            height: 100%; margin: 0; padding: 0; overflow-x: hidden; overflow-y: auto;
+            background: #064e3b url('background.jpg') no-repeat center center fixed; 
+            background-size: cover; font-family: 'Segoe UI', Tahoma, sans-serif; color: white;
         }
 
-        /* حاوية الوسط لتجنب التداخل مع الشريط السفلي */
-        .main-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 20px 0 80px 0; /* مسافة أمان للشريط السفلي */
+        .page-container {
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+            padding: 40px 15px 140px 15px; box-sizing: border-box;
         }
 
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 25px;
-            padding: 30px 20px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        .glass-panel {
+            background: var(--glass-deep); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border); border-radius: 35px; padding: 45px 30px;
+            width: 100%; max-width: 500px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            position: relative; overflow: hidden;
         }
 
-        .logo-title { font-size: 2.2rem; color: var(--gold); margin: 0; }
-        .sub-title { font-size: 1.1rem; color: #e5e7eb; display: block; margin-bottom: 20px; }
-
-        .input-field {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            color: white;
-            font-size: 1.1rem;
-            text-align: center;
-            box-sizing: border-box;
-            margin-top: 10px;
+        /* تأثير العنوان المتحرك (يكتب ويتمحى) */
+        .typewriter-container {
+            min-height: 80px; /* يحافظ على مسافة العنوان */
+            display: flex; justify-content: center; align-items: center;
         }
 
-        .btn-main {
-            width: 100%;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
+        .main-title { 
+            font-size: 2.8rem; font-weight: 900; color: var(--gold); 
+            margin: 0; text-shadow: var(--glow);
+            border-left: 3px solid var(--gold); /* مؤشر الكتابة */
+            white-space: nowrap; overflow: hidden;
+            width: 0; /* يبدأ من الصفر */
+            animation: typing 4s steps(20) infinite alternate, blink 0.5s step-end infinite;
         }
 
-        /* تحسين عرض النتائج للهاتف */
-        .results-view { 
-            display: none; 
-            width: 95%; 
-            max-width: 800px; 
-            background: rgba(0,0,0,0.85); 
-            backdrop-filter: blur(20px); 
-            border-radius: 20px; 
-            padding: 20px; 
-            border: 1px solid var(--glass-border);
-            margin-bottom: 100px;
+        @keyframes typing {
+            0% { width: 0; }
+            50% { width: 100%; } /* يكتب العنوان */
+            100% { width: 0; } /* يمسح العنوان */
         }
 
-        .farmer-card { 
-            background: rgba(255,255,255,0.05); 
-            padding: 15px; 
-            border-radius: 12px; 
-            border-right: 4px solid var(--gold); 
-            text-align: right; 
-            margin-bottom: 15px;
-            font-size: 0.9rem;
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--gold); } }
+
+        .brand-icon { font-size: 4rem; color: var(--gold); margin-bottom: 10px; filter: drop-shadow(var(--glow)); }
+        .sub-title { font-size: 1.2rem; color: #cbd5e1; margin-bottom: 30px; display: block; }
+
+        .modern-input {
+            width: 100%; padding: 18px; background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border); border-radius: 18px; color: white;
+            font-size: 1.3rem; text-align: center; transition: 0.4s; box-sizing: border-box;
+        }
+        .modern-input:focus { border-color: var(--gold); box-shadow: var(--glow); outline: none; }
+
+        .btn-action {
+            width: 100%; background: linear-gradient(135deg, var(--emerald), #059669);
+            color: white; border: none; padding: 18px; border-radius: 18px;
+            font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
 
-        /* جعل الجدول قابلاً للسحب يميناً ويساراً في الهاتف */
-        .table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        table { width: 100%; border-collapse: collapse; min-width: 500px; }
-        th { color: var(--gold); padding: 12px; border-bottom: 2px solid var(--glass-border); font-size: 0.85rem; }
-        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; font-size: 0.85rem; }
-
-        /* الشريط السفلي - تحسين الظهور على الهاتف */
-        .bottom-bar {
+        /* شريط سفلي مطور بالكامل */
+        .footer-premium {
             position: fixed; bottom: 0; width: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            color: white; padding: 10px 0;
-            display: flex; flex-direction: column; /* عمودي في الهاتف */
-            align-items: center;
-            border-top: 2px solid var(--gold);
-            z-index: 9999;
+            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px);
+            border-top: 3px solid var(--gold); z-index: 2000;
         }
 
-        .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; margin: 5px 0; }
-        .ticker-text { display: inline-block; animation: ticker 25s linear infinite; font-size: 0.8rem; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .footer-top-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
 
-        .info-row { display: flex; justify-content: space-between; width: 90%; font-size: 0.75rem; color: var(--gold); }
+        .time-box { font-size: 1rem; font-weight: bold; color: var(--gold); display: flex; align-items: center; gap: 8px; }
+        .weather-box { font-size: 1rem; color: white; font-weight: bold; }
 
+        .ticker-new { padding: 8px 0; overflow: hidden; background: rgba(251, 191, 36, 0.05); }
+        .ticker-content { display: inline-block; white-space: nowrap; animation: ticker-smooth 25s linear infinite; font-size: 0.95rem; }
+        @keyframes ticker-smooth { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* نتائج البحث */
+        .results-view { display: none; width: 100%; max-width: 850px; background: var(--glass-deep); backdrop-filter: blur(30px); border-radius: 30px; padding: 25px; border: 1px solid var(--border); }
+        .farmer-profile { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; border-right: 6px solid var(--gold); text-align: right; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; }
+        .table-res { width: 100%; overflow-x: auto; border-radius: 15px; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: rgba(251, 191, 36, 0.2); color: var(--gold); padding: 12px; }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <div class="glass-card" id="login-screen">
-            <h1 class="logo-title">بوابة الفلاح سطيف</h1>
-            <span class="sub-title">البوابة الرقمية للفلاح</span>
+    <div class="page-container">
+        <div class="glass-panel" id="entry-card">
+            <div class="brand-icon"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i></div>
+            
+            <div class="typewriter-container">
+                <h1 class="main-title">بوابة الفلاح سطيف</h1>
+            </div>
+            
+            <span class="sub-title">البوابة الرقمية التفاعلية</span>
 
-            <div style="text-align: right; width: 100%;">
-                <label style="color: var(--gold); font-size: 0.9rem;">رقم التعريف الشريك:</label>
-                <input type="text" id="pCode" class="input-field" placeholder="أدخل الكود هنا">
+            <div style="text-align: right; margin-bottom: 20px;">
+                <label style="color: var(--gold); font-weight: bold; margin-right: 10px;">كود الشريك:</label>
+                <input type="text" id="pCode" class="modern-input" placeholder="أدخل كود الشريك">
             </div>
 
-            <button class="btn-main" onclick="showResults()" id="mainBtn">دخول النظام</button>
+            <button class="btn-action" onclick="fetchData()" id="searchBtn">دخول البوابة</button>
 
             <a href="https://www.facebook.com/people/CCLS-Setif/100065090058465/" target="_blank" 
-               style="color: #60a5fa; text-decoration: none; display: block; margin-top: 15px; font-size: 0.9rem;">
-                <i class="fa-brands fa-facebook"></i> زورونا على الفيسبوك
+               style="color: #60a5fa; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 25px; font-weight: bold;">
+               <i class="fa-brands fa-facebook"></i> تابعونا على الفيسبوك
             </a>
         </div>
 
-        <div class="results-view" id="results-screen">
-            <h2 style="color: var(--gold); text-align: center; font-size: 1.3rem;">كشف المستحقات</h2>
-            <div id="farmer-display" class="farmer-card"></div>
-            
-            <div class="table-container">
+        <div class="results-view" id="results-card">
+            <h2 style="color: var(--gold); text-align: center;"><i class="fa-solid fa-receipt"></i> كشف المستحقات المالية</h2>
+            <div id="farmer-profile" class="farmer-profile"></div>
+            <div class="table-res">
                 <table>
                     <thead>
                         <tr>
-                            <th>رقم البون</th>
-                            <th>التاريخ</th>
-                            <th>المنتج</th>
-                            <th>الكمية</th>
-                            <th>الحالة</th>
+                            <th>رقم البون</th><th>التاريخ</th><th>المنتج</th><th>الكمية</th><th>حالة الدفع</th>
                         </tr>
                     </thead>
-                    <tbody id="data-table-body"></tbody>
+                    <tbody id="table-body"></tbody>
                 </table>
             </div>
-            
-            <button class="btn-main" onclick="location.reload()" style="background: #4b5563; margin-top: 20px;">خروج</button>
+            <button class="btn-action" onclick="location.reload()" style="background: #374151; margin-top: 20px; width: auto; padding: 12px 40px;">خروج</button>
         </div>
     </div>
 
-    <div class="bottom-bar">
-        <div class="info-row">
-            <div id="clock"></div>
-            <div>سطيف: 18°C <i class="fa-solid fa-sun"></i></div>
+    <div class="footer-premium">
+        <div class="footer-top-row">
+            <div class="time-box" id="clock"></div>
+            <div class="weather-box"><i class="fa-solid fa-sun" style="color: var(--gold);"></i> سطيف: 18°C</div>
         </div>
-        <div class="ticker-wrap">
-            <div class="ticker-text">
-                🌾 مرحبا بكم في البوابة الرقمية للفلاح لولاية سطيف .. نحن دائما في خدمتكم .. المقر الاجتماعي: 56 شارع 1 نوفمبر 1954، سطيف.
+        <div class="ticker-new">
+            <div class="ticker-content">
+                 🌾 مرحبا بك يا فلاح في البوابة الرسمية لتعاونية الحبوب لولاية سطيف .. نحن نعمل دائماً لخدمتكم .. المقر: 56 شارع 1 نوفمبر 1954، سطيف .. الهاتف: 036.53.84.15
             </div>
         </div>
     </div>
 
     <script>
-        function updateTime() {
+        function updateClock() {
             const now = new Date();
-            document.getElementById('clock').innerHTML = now.toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }) + " | " + now.toLocaleDateString('ar-DZ', { day: 'numeric', month: 'short' });
+            const time = now.toLocaleTimeString('ar-DZ', {hour: '2-digit', minute:'2-digit'});
+            const date = now.toLocaleDateString('ar-DZ', {day:'numeric', month:'short'});
+            document.getElementById('clock').innerHTML = `<i class="fa-regular fa-clock"></i> ${time} | ${date}`;
         }
-        setInterval(updateTime, 1000); updateTime();
+        setInterval(updateClock, 1000); updateClock();
 
-        async function showResults() {
-            const codeInput = document.getElementById('pCode').value.trim();
-            const btn = document.getElementById('mainBtn');
-            if (!codeInput) { alert("يرجى إدخال الكود"); return; }
-
+        async function fetchData() {
+            const code = document.getElementById('pCode').value.trim();
+            const btn = document.getElementById('searchBtn');
+            if(!code) { alert("يرجى إدخال الكود"); return; }
             try {
-                btn.innerHTML = 'جاري التحقق...';
-                const response = await fetch(`${window.location.origin}/api/search/${codeInput}`);
-                const result = await response.json();
-
-                if (result.success) {
-                    document.getElementById('login-screen').style.display = 'none';
-                    document.getElementById('results-screen').style.display = 'block';
-                    
-                    document.getElementById('farmer-display').innerHTML = `
-                        <b>الاسم:</b> ${result.farmerName}<br>
-                        <b>الكود:</b> ${codeInput}
-                    `;
-                    
-                    let rows = "";
+                btn.innerHTML = 'جاري التحميل...';
+                const res = await fetch(`${window.location.origin}/api/search/${code}`);
+                const result = await res.json();
+                if(result.success) {
+                    document.getElementById('entry-card').style.display = 'none';
+                    document.getElementById('results-card').style.display = 'block';
+                    document.getElementById('farmer-profile').innerHTML = `<div><b>الاسم:</b> ${result.farmerName}</div><div><b>الكود:</b> ${code}</div>`;
+                    let html = "";
                     result.data.forEach(item => {
-                        const isPaid = item.bankstatus && item.bankstatus.toString().trim() === "1";
-                        rows += `
-                            <tr>
-                                <td>${item["No Bon"]}</td>
-                                <td>${item["Date Bon"]}</td>
-                                <td>${item["Produit"]}</td>
-                                <td style="color:var(--gold); font-weight:bold;">${item["qte"]}</td>
-                                <td style="color:${isPaid ? '#10b981' : '#fbbf24'}; font-weight:bold;">
-                                    ${isPaid ? 'تم الدفع' : 'قيد الانتظار'}
-                                </td>
-                            </tr>`;
+                        const paid = item.bankstatus && item.bankstatus.toString().trim() === "1";
+                        html += `<tr><td>${item["No Bon"]}</td><td>${item["Date Bon"]}</td><td>${item["Produit"]}</td><td style="color:var(--gold); font-weight:bold;">${item["qte"]}</td><td><span style="color:${paid ? '#10b981' : '#fbbf24'}; font-weight:bold;">${paid ? 'تم الدفع' : 'قيد المعالجة'}</span></td></tr>`;
                     });
-                    document.getElementById('data-table-body').innerHTML = rows;
-
-                    // التمرير التلقائي لأعلى الصفحة عند ظهور النتائج
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-                } else {
-                    alert("الكود غير صحيح");
-                    btn.innerHTML = 'دخول النظام';
-                }
-            } catch (err) { alert("خطأ في الاتصال"); }
+                    document.getElementById('table-body').innerHTML = html;
+                    window.scrollTo(0,0);
+                } else { alert("الكود غير موجود"); btn.innerHTML = "دخول البوابة"; }
+            } catch(e) { alert("خطأ في الاتصال"); }
         }
     </script>
 </body>
