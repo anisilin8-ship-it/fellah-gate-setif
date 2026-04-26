@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة الفلاح الرقمية | CCLS Sétif</title>
-    <meta name="google-site-verification" content="D9c3GjOwDbYbsGfw8IDrTBBSYKxjrXnElEClgSf9_rA" />
+    <title>بوابة الفلاح سطيف | البوابة الرقمية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -12,116 +11,98 @@
             --gold: #fbbf24; 
             --green: #10b981; 
             --dark-green: #064e3b; 
-            --glass: rgba(0, 0, 0, 0.8); 
+            --glass: rgba(0, 0, 0, 0.85); 
         }
 
         body { 
-            margin: 0; 
-            padding: 0; 
+            margin: 0; padding: 0; 
             background: var(--dark-green) url('background.jpg') no-repeat center center fixed; 
             background-size: cover; 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
             color: white; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            overflow-x: hidden; 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; overflow-x: hidden; 
         }
 
         .glass-panel { 
-            background: var(--glass); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 25px; 
-            padding: 40px; 
-            width: 90%; 
-            max-width: 850px; 
-            text-align: center; 
+            background: var(--glass); backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px; 
+            padding: 40px; width: 90%; max-width: 850px; text-align: center; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
-            animation: fadeIn 0.8s ease-out; 
         }
 
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        .logo-title { font-size: 2.8rem; font-weight: 900; color: var(--gold); margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .sub-title { font-size: 1.4rem; margin-top: 5px; opacity: 0.9; border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 5px; }
+        .logo-title { font-size: 3rem; font-weight: 900; color: var(--gold); margin: 0; }
+        .sub-title { font-size: 1.5rem; color: white; margin-bottom: 20px; display: block; }
         
-        .search-box { position: relative; margin: 35px auto; width: 80%; }
-        .search-box i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--green); font-size: 1.4rem; }
+        .search-box { position: relative; margin: 30px auto; width: 85%; }
+        .search-box i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--green); font-size: 1.5rem; }
         
         input { 
-            width: 100%; 
-            padding: 18px 60px 18px 20px; 
-            border-radius: 12px; 
-            border: 1px solid rgba(251, 191, 36, 0.4); 
-            background: rgba(255,255,255,0.1); 
-            color: white; 
-            font-size: 1.2rem; 
-            text-align: center; 
-            outline: none; 
-            box-sizing: border-box; 
+            width: 100%; padding: 18px 60px 18px 20px; border-radius: 15px; 
+            border: 1px solid var(--gold); background: rgba(255,255,255,0.1); 
+            color: white; font-size: 1.3rem; text-align: center; outline: none; 
         }
 
-        button { 
+        .btn-main { 
             background: linear-gradient(135deg, var(--green), #059669); 
-            color: white; 
-            border: none; 
-            padding: 15px 45px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 1.2rem; 
-            transition: 0.3s; 
+            color: white; border: none; padding: 15px 50px; border-radius: 12px; 
+            cursor: pointer; font-weight: bold; font-size: 1.2rem; transition: 0.3s; 
         }
-        button:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4); }
 
+        .btn-fb {
+            display: inline-block; margin-top: 20px; background: #1877f2;
+            color: white; padding: 12px 25px; border-radius: 10px;
+            text-decoration: none; font-weight: bold; transition: 0.3s;
+        }
+        .btn-fb:hover { background: #145dbf; transform: scale(1.05); }
+
+        /* معلومات الفلاح والجدول */
         .farmer-info { 
-            background: rgba(255,255,255,0.08); 
-            padding: 20px; 
-            border-radius: 15px; 
-            margin-bottom: 25px; 
-            text-align: right; 
-            border-right: 5px solid var(--gold); 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px; 
+            background: rgba(255,255,255,0.08); padding: 20px; border-radius: 15px; 
+            margin-bottom: 20px; text-align: right; border-right: 5px solid var(--gold); 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; 
         }
 
-        .results-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(0,0,0,0.3); }
-        .results-table th { background: #064e3b; color: var(--gold); padding: 15px; font-size: 0.95rem; }
-        .results-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
-        
-        .status-badge { padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; color: white; }
+        .results-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .results-table th { background: #064e3b; color: var(--gold); padding: 12px; }
+        .results-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
 
-        .footer-ticker { position: fixed; bottom: 0; width: 100%; background: #064e3b; color: white; padding: 10px 0; overflow: hidden; white-space: nowrap; border-top: 2px solid var(--gold); }
-        .ticker-text { display: inline-block; animation: ticker 35s linear infinite; }
+        /* الشريط السفلي المطور */
+        .footer-ticker { 
+            position: fixed; bottom: 0; width: 100%; 
+            background: #064e3b; color: white; padding: 8px 0; 
+            border-top: 2px solid var(--gold); z-index: 1000;
+        }
+        .footer-content { display: flex; justify-content: space-around; align-items: center; font-size: 0.9rem; }
+        .ticker-move { flex: 1; overflow: hidden; white-space: nowrap; margin: 0 20px; }
+        .ticker-text { display: inline-block; animation: ticker 30s linear infinite; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .status-badge { padding: 4px 8px; border-radius: 5px; font-weight: bold; color: white; }
     </style>
 </head>
 <body>
 
     <div class="glass-panel">
         <div id="search-area">
-            <i class="fa-solid fa-wheat-awn" style="font-size: 3rem; color: var(--gold); margin-bottom: 10px;"></i>
-            <h1 class="logo-title">CCLS SÉTIF</h1>
-            <div class="sub-title">البوابة الرقمية للفلاح</div>
+            <h1 class="logo-title">بوابة الفلاح سطيف</h1>
+            <span class="sub-title">البوابة الرقمية للفلاح</span>
             
             <div class="search-box">
                 <i class="fa-solid fa-id-card-clip"></i>
                 <input type="text" id="pCode" placeholder="أدخل كود الشريك الخاص بك">
             </div>
             
-            <button onclick="showResults()" id="mainBtn">بحث في النظام</button>
+            <button class="btn-main" onclick="showResults()" id="mainBtn">دخول النظام</button>
+            <br>
+            <a href="https://www.facebook.com/people/CCLS-Setif/100065090058465/" target="_blank" class="btn-fb">
+                <i class="fa-brands fa-facebook"></i> زورونا على الفيسبوك
+            </a>
         </div>
 
         <div id="result-area" style="display: none;">
-            <h2 style="color: var(--gold);"><i class="fa-solid fa-file-invoice"></i> تفاصيل المستحقات</h2>
+            <h2 style="color: var(--gold);">كشف مستحقات الشريك</h2>
             <div id="farmer-display" class="farmer-info"></div>
-            
             <div style="overflow-x: auto;">
                 <table class="results-table">
                     <thead>
@@ -136,75 +117,68 @@
                     <tbody id="data-table-body"></tbody>
                 </table>
             </div>
-            
-            <button onclick="location.reload()" style="background: #4b5563; margin-top: 20px;">رجوع</button>
+            <button class="btn-main" onclick="location.reload()" style="background: #4b5563; margin-top: 20px;">خروج</button>
         </div>
     </div>
 
     <div class="footer-ticker">
-        <div class="ticker-text">
-            🌾 مرحبا بكم في البوابة الرقمية لتعاونية الحبوب والبقول الجافة لولاية سطيف .. نحن دائماً في خدمتكم .. المقر الاجتماعي: 56 شارع 1 نوفمبر 1954، سطيف.
+        <div class="footer-content">
+            <div id="date-time" style="font-weight: bold; color: var(--gold); padding: 0 15px;"></div>
+            <div class="ticker-move">
+                <div class="ticker-text">
+                    🌾 مرحبا بكم في البوابة الرقمية للفلاح لولاية سطيف .. نحن دائما في خدمتكم .. المقر الاجتماعي: 56 شارع 1 نوفمبر 1954، سطيف .. الهاتف: 036.53.84.15
+                </div>
+            </div>
+            <div style="padding: 0 15px;"><i class="fa-solid fa-cloud-sun"></i> سطيف: <span id="temp">18°C</span></div>
         </div>
     </div>
 
     <script>
+        // تحديث الوقت والتاريخ
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            document.getElementById('date-time').innerHTML = now.toLocaleDateString('ar-DZ', options);
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
         async function showResults() {
             const codeInput = document.getElementById('pCode').value.trim();
             const btn = document.getElementById('mainBtn');
-
-            if (!codeInput) {
-                alert("يرجى إدخال كود الشريك");
-                return;
-            }
+            if (!codeInput) { alert("يرجى إدخال كود الشريك"); return; }
 
             try {
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري البحث...';
-                btn.disabled = true;
-
-                // طلب البيانات من السيرفر
+                btn.innerHTML = 'جاري التحميل...';
                 const response = await fetch(`${window.location.origin}/api/search/${codeInput}`);
                 const result = await response.json();
 
                 if (result.success) {
                     document.getElementById('search-area').style.display = 'none';
                     document.getElementById('result-area').style.display = 'block';
-                    
                     document.getElementById('farmer-display').innerHTML = `
                         <div><b style="color: var(--gold);">الاسم:</b> ${result.farmerName}</div>
                         <div><b style="color: var(--gold);">الكود:</b> ${codeInput}</div>
                     `;
-                    
                     let rows = "";
                     result.data.forEach(item => {
-                        // الربط مع أسماء أعمدة ملف CSV الخاص بك بدقة
                         const isPaid = item.bankstatus && item.bankstatus.toString().trim() === "1";
-                        const statusColor = isPaid ? "var(--green)" : "#d97706";
-                        const statusText = isPaid ? "تم الدفع" : "قيد الانتظار";
-
                         rows += `
                             <tr>
-                                <td>${item["No Bon"] || "---"}</td>
-                                <td>${item["Date Bon"] || "---"}</td>
-                                <td>${item["Produit"] || "---"}</td>
-                                <td style="color: var(--gold); font-weight:bold;">${item["qte"] || "0"}</td>
+                                <td>${item["No Bon"]}</td>
+                                <td>${item["Date Bon"]}</td>
+                                <td>${item["Produit"]}</td>
+                                <td style="color:var(--gold); font-weight:bold;">${item["qte"]}</td>
                                 <td>
-                                    <span class="status-badge" style="background:${statusColor};">
-                                        ${statusText}
+                                    <span class="status-badge" style="background:${isPaid ? 'var(--green)' : '#d97706'};">
+                                        ${isPaid ? 'تم الدفع' : 'قيد الانتظار'}
                                     </span>
                                 </td>
                             </tr>`;
                     });
                     document.getElementById('data-table-body').innerHTML = rows;
-                } else {
-                    alert("كود الشريك غير موجود.");
-                    btn.innerHTML = 'بحث في النظام';
-                    btn.disabled = false;
-                }
-            } catch (err) {
-                alert("خطأ في الاتصال بالسيرفر.");
-                btn.innerHTML = 'بحث في النظام';
-                btn.disabled = false;
-            }
+                } else { alert("الكود غير موجود"); location.reload(); }
+            } catch (err) { alert("خطأ في الاتصال"); }
         }
     </script>
 </body>
