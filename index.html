@@ -15,6 +15,7 @@
 
         body {
             margin: 0; padding: 0;
+            /* تم ضبط اسم الصورة ليكون background.jpg ليتوافق مع GitHub */
             background: var(--dark-green) url('background.jpg') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -22,7 +23,6 @@
             overflow-x: hidden;
         }
 
-        /* حاوية التصميم الزجاجي */
         .glass-panel {
             background: var(--glass);
             backdrop-filter: blur(20px);
@@ -48,7 +48,6 @@
             border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 5px;
         }
 
-        /* صندوق إدخال الكود المطور */
         .search-box {
             position: relative; margin: 40px auto; width: 85%;
         }
@@ -80,7 +79,6 @@
             transform: translateY(-3px); box-shadow: 0 15px 25px rgba(16, 185, 129, 0.3);
         }
 
-        /* تنسيق النتائج */
         .farmer-info {
             background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px;
             margin-bottom: 30px; text-align: right; border-right: 6px solid var(--gold);
@@ -95,7 +93,6 @@
         .results-table th { background: var(--dark-green); color: var(--gold); padding: 18px; font-size: 1rem; }
         .results-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        /* شريط التواصل */
         .contact-pill {
             display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.1);
             padding: 8px 20px; border-radius: 50px; margin: 10px; font-size: 0.9rem;
@@ -108,7 +105,6 @@
         
         .fb-link i { margin-left: 8px; }
 
-        /* الشريط السفلي المتحرك */
         .footer-ticker {
             position: fixed; bottom: 0; width: 100%; background: linear-gradient(to right, #064e3b, #065f46);
             color: white; padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 2px solid var(--gold);
@@ -191,11 +187,11 @@
             if (!code) return alert("من فضلك أدخل الكود أولاً");
 
             try {
-                // إظهار رسالة انتظار بسيطة
                 const btn = document.querySelector('button');
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحميل...';
 
-                const response = await fetch(`http://localhost:3001/api/search/${code}`);
+                // تم تعديل الرابط ليعمل تلقائياً على Render أو الجهاز المحلي
+                const response = await fetch(`${window.location.origin}/api/search/${code}`);
                 const result = await response.json();
 
                 if (result.success) {
