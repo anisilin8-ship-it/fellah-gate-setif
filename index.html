@@ -6,61 +6,160 @@
     <title>بوابة الفلاح الرقمية | CCLS Sétif</title>
     <meta name="google-site-verification" content="D9c3GjOwDbYbsGfw8IDrTBBSYKxjrXnElEClgSf9_rA" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        :root { --gold: #fbbf24; --green: #10b981; --dark-green: #064e3b; --glass: rgba(0, 0, 0, 0.75); }
-        body { margin: 0; padding: 0; background: var(--dark-green) url('background.jpg') no-repeat center center fixed; background-size: cover; font-family: 'Segoe UI', Tahoma, sans-serif; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        .glass-panel { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; padding: 50px; width: 95%; max-width: 800px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.6); animation: fadeIn 1s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        :root { 
+            --gold: #fbbf24; 
+            --green: #10b981; 
+            --dark-green: #064e3b; 
+            --glass: rgba(0, 0, 0, 0.75); 
+        }
+
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background: var(--dark-green) url('background.jpg') no-repeat center center fixed; 
+            background-size: cover; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+        }
+
+        /* التصميم الزجاجي */
+        .glass-panel { 
+            background: var(--glass); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 30px; 
+            padding: 50px; 
+            width: 95%; 
+            max-width: 800px; 
+            text-align: center; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6); 
+            animation: fadeIn 1s ease-out; 
+        }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
         .logo-title { font-size: 3rem; font-weight: 900; color: var(--gold); margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); letter-spacing: 2px; }
         .sub-title { font-size: 1.5rem; margin-top: 10px; opacity: 0.9; border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 5px; }
+        
+        /* صندوق البحث */
         .search-box { position: relative; margin: 40px auto; width: 85%; }
         .search-box i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--green); font-size: 1.5rem; }
-        input { width: 100%; padding: 18px 60px 18px 20px; border-radius: 15px; border: 2px solid rgba(251, 191, 36, 0.3); background: rgba(255,255,255,0.05); color: white; font-size: 1.3rem; text-align: center; outline: none; transition: 0.4s; box-sizing: border-box; }
+        
+        input { 
+            width: 100%; 
+            padding: 18px 60px 18px 20px; 
+            border-radius: 15px; 
+            border: 2px solid rgba(251, 191, 36, 0.3); 
+            background: rgba(255,255,255,0.05); 
+            color: white; 
+            font-size: 1.3rem; 
+            text-align: center; 
+            outline: none; 
+            transition: 0.4s; 
+            box-sizing: border-box; 
+        }
         input:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); box-shadow: 0 0 20px rgba(251, 191, 36, 0.2); }
-        button { background: linear-gradient(135deg, var(--green), #059669); color: white; border: none; padding: 16px 50px; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 1.2rem; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+        button { 
+            background: linear-gradient(135deg, var(--green), #059669); 
+            color: white; 
+            border: none; 
+            padding: 16px 50px; 
+            border-radius: 15px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 1.2rem; 
+            transition: 0.3s; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+        }
         button:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(16, 185, 129, 0.3); }
-        .farmer-info { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; margin-bottom: 30px; text-align: right; border-right: 6px solid var(--gold); display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        /* معلومات الفلاح */
+        .farmer-info { 
+            background: rgba(255,255,255,0.05); 
+            padding: 25px; 
+            border-radius: 20px; 
+            margin-bottom: 30px; 
+            text-align: right; 
+            border-right: 6px solid var(--gold); 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+        }
+
+        /* الجدول */
         .results-table { width: 100%; border-collapse: collapse; background: rgba(0,0,0,0.2); border-radius: 15px; overflow: hidden; margin-top: 20px; }
         .results-table th { background: var(--dark-green); color: var(--gold); padding: 18px; font-size: 1rem; }
-        .results-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .results-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        
+        .status-badge { padding: 6px 12px; border-radius: 8px; font-weight: bold; color: white; display: inline-block; min-width: 100px; }
+
         .fb-link { color: #60a5fa; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 15px; font-size: 1.1rem; }
-        .footer-ticker { position: fixed; bottom: 0; width: 100%; background: linear-gradient(to right, #064e3b, #065f46); color: white; padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 2px solid var(--gold); }
+
+        /* الشريط السفلي */
+        .footer-ticker { position: fixed; bottom: 0; width: 100%; background: linear-gradient(to right, #064e3b, #065f46); color: white; padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 2px solid var(--gold); z-index: 1000; }
         .ticker-text { display: inline-block; animation: ticker 40s linear infinite; font-weight: 500; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        
         .gold-text { color: var(--gold); font-weight: bold; }
     </style>
 </head>
 <body>
+
     <div class="glass-panel">
         <div id="search-area">
             <i class="fa-solid fa-wheat-awn" style="font-size: 3rem; color: var(--gold); margin-bottom: 15px;"></i>
             <h1 class="logo-title">CCLS SÉTIF</h1>
             <div class="sub-title">البوابة الرقمية للفلاح</div>
             <p style="margin-top: 15px; font-size: 1.1rem; color: #d1d5db;">موسم الحصاد والدرس <span class="gold-text">2025/2026</span></p>
+            
             <div class="search-box">
                 <i class="fa-solid fa-id-card-clip"></i>
                 <input type="text" id="pCode" placeholder="أدخل كود الشريك الخاص بك">
             </div>
-            <button onclick="showResults()">دخول النظام</button><br>
-            <a class="fb-link" href="https://www.facebook.com/people/CCLS-Setif/100065090058465/" target="_blank">صفحتنا الرسمية على فايسبوك</a>
+            
+            <button onclick="showResults()" id="mainBtn">دخول النظام</button><br>
+            <a class="fb-link" href="https://www.facebook.com/people/CCLS-Setif/100065090058465/" target="_blank">
+                <i class="fa-brands fa-facebook"></i> صفحتنا الرسمية على فايسبوك
+            </a>
         </div>
 
         <div id="result-area" style="display: none;">
             <h2 class="gold-text"><i class="fa-solid fa-file-invoice-dollar"></i> كشف مستحقات الشريك</h2>
             <div id="farmer-display" class="farmer-info"></div>
+            
             <div style="overflow-x: auto;">
                 <table class="results-table">
                     <thead>
-                        <tr><th>رقم البون</th><th>التاريخ</th><th>المنتج</th><th>الكمية</th><th>الحالة</th></tr>
+                        <tr>
+                            <th>رقم البون</th>
+                            <th>التاريخ</th>
+                            <th>المنتج</th>
+                            <th>الكمية</th>
+                            <th>الحالة</th>
+                        </tr>
                     </thead>
                     <tbody id="data-table-body"></tbody>
                 </table>
             </div>
-            <button onclick="location.reload()" style="background: #4b5563; margin-top: 25px;">خروج</button>
+            
+            <button onclick="location.reload()" style="background: #4b5563; margin-top: 25px;">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> خروج
+            </button>
         </div>
     </div>
 
-   <div class="footer-ticker">
+    <div class="footer-ticker">
         <div class="ticker-text">
             📍 <b>المقر الاجتماعي:</b> 56 شارع 1 نوفمبر 1954، سطيف .. 
             📞 <b>الهاتف:</b> 036.53.84.15 .. 
@@ -71,28 +170,71 @@
 
     <script>
         async function showResults() {
-            const code = document.getElementById('pCode').value;
-            if (!code) return alert("من فضلك أدخل الكود أولاً");
+            const codeInput = document.getElementById('pCode').value.trim();
+            const btn = document.getElementById('mainBtn');
+
+            if (!codeInput) {
+                alert("من فضلك أدخل كود الشريك أولاً");
+                return;
+            }
+
             try {
-                const btn = document.querySelector('button');
-                btn.innerHTML = 'جاري التحميل...';
-                const response = await fetch(`${window.location.origin}/api/search/${code}`);
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحميل...';
+                btn.disabled = true;
+
+                // طلب البيانات من السيرفر
+                const response = await fetch(`${window.location.origin}/api/search/${codeInput}`);
                 const result = await response.json();
+
                 if (result.success) {
                     document.getElementById('search-area').style.display = 'none';
                     document.getElementById('result-area').style.display = 'block';
-                    document.getElementById('farmer-display').innerHTML = `<div><b class="gold-text">الاسم واللقب:</b><br> ${result.farmerName}</div><div><b class="gold-text">كود الشريك:</b><br> ${code}</div>`;
+                    
+                    // عرض اسم الفلاح والكود
+                    document.getElementById('farmer-display').innerHTML = `
+                        <div><b class="gold-text">الاسم واللقب:</b><br> ${result.farmerName}</div>
+                        <div><b class="gold-text">كود الشريك:</b><br> ${codeInput}</div>
+                    `;
                     
                     let rows = "";
                     result.data.forEach(item => {
-                        const isPaid = item.BankStatus && item.BankStatus.includes("تم الدفع");
-                        const statusColor = isPaid ? "#10b981" : "#fbbf24";
-                        rows += `<tr><td>${item.NoBon}</td><td>${item.Date}</td><td>${item.Produit}</td><td class="gold-text">${item.Qte}</td><td><span style="background:${statusColor};padding:5px;border-radius:5px;">${item.BankStatus || 'قيد الانتظار'}</span></td></tr>`;
+                        // منطق الرقم 1 وفراغ
+                        const isPaid = item.BankStatus && item.BankStatus.toString().trim() === "1";
+                        const statusColor = isPaid ? "var(--green)" : "var(--gold)";
+                        const statusText = isPaid ? "تم الدفع" : "قيد الانتظار";
+
+                        rows += `
+                            <tr>
+                                <td>${item.NoBon}</td>
+                                <td>${item.Date}</td>
+                                <td>${item.Produit}</td>
+                                <td class="gold-text">${item.Qte}</td>
+                                <td>
+                                    <span class="status-badge" style="background:${statusColor};">
+                                        ${statusText}
+                                    </span>
+                                </td>
+                            </tr>`;
                     });
                     document.getElementById('data-table-body').innerHTML = rows;
-                } else { alert("الكود غير موجود"); btn.innerHTML = 'دخول النظام'; }
-            } catch (err) { alert("خطأ في الاتصال"); }
+                } else {
+                    alert("عذراً، كود الشريك غير موجود في قاعدة البيانات.");
+                    btn.innerHTML = 'دخول النظام';
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                alert("خطأ في الاتصال بالسيرفر. يرجى المحاولة لاحقاً.");
+                btn.innerHTML = 'دخول النظام';
+                btn.disabled = false;
+            }
         }
+
+        // تفعيل زر الإنتر للبحث
+        document.getElementById('pCode').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                showResults();
+            }
+        });
     </script>
 </body>
 </html>
