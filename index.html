@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>بوابة الفلاح سطيف | البوابة الرقمية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -10,7 +10,7 @@
         :root { 
             --gold: #fbbf24; 
             --green: #10b981; 
-            --glass: rgba(255, 255, 255, 0.1); 
+            --glass: rgba(0, 0, 0, 0.8); 
             --glass-border: rgba(255, 255, 255, 0.2);
         }
 
@@ -20,51 +20,51 @@
             background-size: cover; 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
             color: white; 
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; overflow: hidden;
+            min-height: 100vh;
+            /* تفعيل النزول على الهاتف */
+            overflow-y: auto; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* البطاقة الزجاجية المضيئة */
+        /* حاوية الوسط لتجنب التداخل مع الشريط السفلي */
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0 80px 0; /* مسافة أمان للشريط السفلي */
+        }
+
         .glass-card {
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            padding: 40px;
+            border-radius: 25px;
+            padding: 30px 20px;
             width: 90%;
-            max-width: 550px;
+            max-width: 500px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.05);
-            animation: fadeIn 1s ease-out;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .logo-title { font-size: 2.2rem; color: var(--gold); margin: 0; }
+        .sub-title { font-size: 1.1rem; color: #e5e7eb; display: block; margin-bottom: 20px; }
 
-        .logo-title { font-size: 2.8rem; font-weight: 900; color: var(--gold); margin: 0; text-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
-        .sub-title { font-size: 1.3rem; color: #e5e7eb; margin-top: 5px; display: block; letter-spacing: 1px; }
-
-        /* منطقة الإدخال المضيئة */
-        .input-wrapper { margin: 35px 0; text-align: right; }
-        .input-wrapper label { display: block; margin-bottom: 12px; color: var(--gold); font-weight: bold; font-size: 1.1rem; }
-        
         .input-field {
             width: 100%;
-            padding: 18px;
-            background: rgba(255, 255, 255, 0.07);
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid var(--glass-border);
-            border-radius: 15px;
+            border-radius: 12px;
             color: white;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             text-align: center;
-            outline: none;
-            transition: 0.3s;
             box-sizing: border-box;
-        }
-        .input-field:focus {
-            border-color: var(--gold);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+            margin-top: 10px;
         }
 
         .btn-main {
@@ -72,115 +72,135 @@
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             border: none;
-            padding: 16px;
-            border-radius: 15px;
-            font-size: 1.3rem;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            margin-top: 20px;
         }
-        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4); }
 
-        .btn-fb {
-            display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
-            color: #60a5fa; text-decoration: none; font-weight: bold; font-size: 1.1rem;
-            transition: 0.3s;
+        /* تحسين عرض النتائج للهاتف */
+        .results-view { 
+            display: none; 
+            width: 95%; 
+            max-width: 800px; 
+            background: rgba(0,0,0,0.85); 
+            backdrop-filter: blur(20px); 
+            border-radius: 20px; 
+            padding: 20px; 
+            border: 1px solid var(--glass-border);
+            margin-bottom: 100px;
         }
-        .btn-fb:hover { color: #93c5fd; text-shadow: 0 0 10px rgba(96, 165, 250, 0.5); }
 
-        /* شريط المعلومات السفلي */
+        .farmer-card { 
+            background: rgba(255,255,255,0.05); 
+            padding: 15px; 
+            border-radius: 12px; 
+            border-right: 4px solid var(--gold); 
+            text-align: right; 
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* جعل الجدول قابلاً للسحب يميناً ويساراً في الهاتف */
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th { color: var(--gold); padding: 12px; border-bottom: 2px solid var(--glass-border); font-size: 0.85rem; }
+        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; font-size: 0.85rem; }
+
+        /* الشريط السفلي - تحسين الظهور على الهاتف */
         .bottom-bar {
             position: fixed; bottom: 0; width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            color: white; padding: 12px 0;
-            display: flex; justify-content: space-around; align-items: center;
+            background: rgba(0, 0, 0, 0.9);
+            color: white; padding: 10px 0;
+            display: flex; flex-direction: column; /* عمودي في الهاتف */
+            align-items: center;
             border-top: 2px solid var(--gold);
+            z-index: 9999;
         }
-        .ticker-wrap { flex: 1; overflow: hidden; white-space: nowrap; margin: 0 20px; }
-        .ticker-text { display: inline-block; animation: ticker 30s linear infinite; }
+
+        .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; margin: 5px 0; }
+        .ticker-text { display: inline-block; animation: ticker 25s linear infinite; font-size: 0.8rem; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* منطقة النتائج الزجاجية */
-        .results-view { display: none; width: 95%; max-width: 850px; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); border-radius: 25px; padding: 30px; border: 1px solid var(--glass-border); }
-        .farmer-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border-right: 5px solid var(--gold); text-align: right; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th { color: var(--gold); padding: 15px; border-bottom: 2px solid var(--glass-border); }
-        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; }
-        .status { padding: 5px 12px; border-radius: 8px; font-weight: bold; }
+        .info-row { display: flex; justify-content: space-between; width: 90%; font-size: 0.75rem; color: var(--gold); }
+
     </style>
 </head>
 <body>
 
-    <div class="glass-card" id="login-screen">
-        <i class="fa-solid fa-wheat-awn-circle-exclamation" style="font-size: 3.5rem; color: var(--gold); margin-bottom: 15px;"></i>
-        <h1 class="logo-title">بوابة الفلاح سطيف</h1>
-        <span class="sub-title">البوابة الرقمية للفلاح</span>
+    <div class="main-container">
+        <div class="glass-card" id="login-screen">
+            <h1 class="logo-title">بوابة الفلاح سطيف</h1>
+            <span class="sub-title">البوابة الرقمية للفلاح</span>
 
-        <div class="input-wrapper">
-            <label><i class="fa-solid fa-barcode"></i> رقم التعريف الشريك (Code)</label>
-            <input type="text" id="pCode" class="input-field" placeholder="أدخل كود الشريك الخاص بك">
+            <div style="text-align: right; width: 100%;">
+                <label style="color: var(--gold); font-size: 0.9rem;">رقم التعريف الشريك:</label>
+                <input type="text" id="pCode" class="input-field" placeholder="أدخل الكود هنا">
+            </div>
+
+            <button class="btn-main" onclick="showResults()" id="mainBtn">دخول النظام</button>
+
+            <a href="https://www.facebook.com/people/CCLS-Setif/100065090058465/" target="_blank" 
+               style="color: #60a5fa; text-decoration: none; display: block; margin-top: 15px; font-size: 0.9rem;">
+                <i class="fa-brands fa-facebook"></i> زورونا على الفيسبوك
+            </a>
         </div>
 
-        <button class="btn-main" onclick="showResults()" id="mainBtn">دخول النظام</button>
-
-        <a href="https://www.facebook.com/people/CCLS-Setif/100065090058465/" target="_blank" class="btn-fb">
-            <i class="fa-brands fa-facebook"></i> زورونا على الفيسبوك
-        </a>
-    </div>
-
-    <div class="results-view" id="results-screen">
-        <h2 style="color: var(--gold); text-align: center;"><i class="fa-solid fa-file-invoice-dollar"></i> كشف المستحقات</h2>
-        <div id="farmer-display" class="farmer-card"></div>
-        
-        <div style="overflow-x: auto;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>رقم البون</th>
-                        <th>التاريخ</th>
-                        <th>المنتج</th>
-                        <th>الكمية</th>
-                        <th>الحالة</th>
-                    </tr>
-                </thead>
-                <tbody id="data-table-body"></tbody>
-            </table>
+        <div class="results-view" id="results-screen">
+            <h2 style="color: var(--gold); text-align: center; font-size: 1.3rem;">كشف المستحقات</h2>
+            <div id="farmer-display" class="farmer-card"></div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم البون</th>
+                            <th>التاريخ</th>
+                            <th>المنتج</th>
+                            <th>الكمية</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-table-body"></tbody>
+                </table>
+            </div>
+            
+            <button class="btn-main" onclick="location.reload()" style="background: #4b5563; margin-top: 20px;">خروج</button>
         </div>
-        
-        <button class="btn-main" onclick="location.reload()" style="background: #4b5563; margin-top: 20px; width: auto; padding: 10px 40px;">خروج</button>
     </div>
 
     <div class="bottom-bar">
-        <div id="clock" style="font-weight: bold; color: var(--gold); padding: 0 15px;"></div>
+        <div class="info-row">
+            <div id="clock"></div>
+            <div>سطيف: 18°C <i class="fa-solid fa-sun"></i></div>
+        </div>
         <div class="ticker-wrap">
             <div class="ticker-text">
-                🌾 مرحبا بكم في البوابة الرقمية للفلاح لولاية سطيف .. نحن دائما في خدمتكم وتسهيل مهامكم .. المقر الاجتماعي: 56 شارع 1 نوفمبر 1954، سطيف .. الهاتف: 036.53.84.15
+                🌾 مرحبا بكم في البوابة الرقمية للفلاح لولاية سطيف .. نحن دائما في خدمتكم .. المقر الاجتماعي: 56 شارع 1 نوفمبر 1954، سطيف.
             </div>
         </div>
-        <div style="padding: 0 15px;"><i class="fa-solid fa-temperature-three-quarters"></i> سطيف: <span id="temp">18°C</span></div>
     </div>
 
     <script>
-        // تحديث الساعة والتاريخ
         function updateTime() {
             const now = new Date();
-            const timeStr = now.toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' });
-            const dateStr = now.toLocaleDateString('ar-DZ', { day: 'numeric', month: 'short' });
-            document.getElementById('clock').innerHTML = `<i class="fa-regular fa-clock"></i> ${timeStr} | ${dateStr}`;
+            document.getElementById('clock').innerHTML = now.toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }) + " | " + now.toLocaleDateString('ar-DZ', { day: 'numeric', month: 'short' });
         }
-        setInterval(updateTime, 1000);
-        updateTime();
+        setInterval(updateTime, 1000); updateTime();
 
         async function showResults() {
             const codeInput = document.getElementById('pCode').value.trim();
             const btn = document.getElementById('mainBtn');
-            if (!codeInput) { alert("يرجى إدخال كود الشريك أولاً"); return; }
+            if (!codeInput) { alert("يرجى إدخال الكود"); return; }
 
             try {
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحقق...';
+                btn.innerHTML = 'جاري التحقق...';
                 const response = await fetch(`${window.location.origin}/api/search/${codeInput}`);
                 const result = await response.json();
 
@@ -189,8 +209,8 @@
                     document.getElementById('results-screen').style.display = 'block';
                     
                     document.getElementById('farmer-display').innerHTML = `
-                        <div><b style="color: var(--gold);">الاسم:</b><br>${result.farmerName}</div>
-                        <div><b style="color: var(--gold);">الكود:</b><br>${codeInput}</div>
+                        <b>الاسم:</b> ${result.farmerName}<br>
+                        <b>الكود:</b> ${codeInput}
                     `;
                     
                     let rows = "";
@@ -202,22 +222,21 @@
                                 <td>${item["Date Bon"]}</td>
                                 <td>${item["Produit"]}</td>
                                 <td style="color:var(--gold); font-weight:bold;">${item["qte"]}</td>
-                                <td>
-                                    <span class="status" style="background:${isPaid ? 'rgba(16,185,129,0.2)' : 'rgba(217,119,6,0.2)'}; color:${isPaid ? '#10b981' : '#fbbf24'};">
-                                        ${isPaid ? 'تم الدفع' : 'قيد الانتظار'}
-                                    </span>
+                                <td style="color:${isPaid ? '#10b981' : '#fbbf24'}; font-weight:bold;">
+                                    ${isPaid ? 'تم الدفع' : 'قيد الانتظار'}
                                 </td>
                             </tr>`;
                     });
                     document.getElementById('data-table-body').innerHTML = rows;
+
+                    // التمرير التلقائي لأعلى الصفحة عند ظهور النتائج
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
                 } else {
-                    alert("عذراً، هذا الكود غير موجود في سجلاتنا.");
+                    alert("الكود غير صحيح");
                     btn.innerHTML = 'دخول النظام';
                 }
-            } catch (err) {
-                alert("حدث خطأ في الاتصال بالسيرفر.");
-                btn.innerHTML = 'دخول النظام';
-            }
+            } catch (err) { alert("خطأ في الاتصال"); }
         }
     </script>
 </body>
