@@ -20,9 +20,11 @@ const findDeliveries = (targetCode) => {
         const filePath = path.join(__dirname, 'deliveries.csv');
         if (!fs.existsSync(filePath)) return reject('ملف البيانات غير موجود');
 
-        fs.createReadStream(filePath)
+        // أضفنا utf-8 لضمان استقرار قراءة الأرقام
+        fs.createReadStream(filePath, { encoding: 'utf8' })
             .pipe(csv({ separator: ';' }))
             .on('data', (row) => {
+                // التأكد من مطابقة كود الشريك بدقة
                 if (row.CodePart && row.CodePart.trim() === targetCode.trim()) {
                     results.push(row);
                 }
@@ -40,7 +42,6 @@ app.get('/api/search/:code', async (req, res) => {
             res.json({
                 success: true,
                 farmerName: results[0].Nom,
-                status: results[0].BankStatus, 
                 data: results
             });
         } else {
@@ -51,7 +52,6 @@ app.get('/api/search/:code', async (req, res) => {
     }
 });
 
-// رابط خريطة الموقع لقوقل
 app.get('/sitemap.xml', (req, res) => {
     res.sendFile(path.join(__dirname, 'sitemap.xml'));
 });
