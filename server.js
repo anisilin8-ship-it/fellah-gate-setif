@@ -11,9 +11,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname)); // لتشغيل ملف index.html والصور تلقائياً
+app.use(express.static(__dirname)); 
 
-// دالة البحث في ملف CSV
 const findDeliveries = (targetCode) => {
     return new Promise((resolve, reject) => {
         const results = [];
@@ -24,7 +23,7 @@ const findDeliveries = (targetCode) => {
         }
 
         fs.createReadStream(filePath)
-            .pipe(csv({ separator: ';' })) // استخدام الفاصلة المنقوطة كما في ملفك
+            .pipe(csv({ separator: ';' })) 
             .on('data', (row) => {
                 if (row.CodePart && row.CodePart.trim() === targetCode.trim()) {
                     results.push(row);
@@ -35,7 +34,6 @@ const findDeliveries = (targetCode) => {
     });
 };
 
-// رابط البحث API
 app.get('/api/search/:code', async (req, res) => {
     try {
         const results = await findDeliveries(req.params.code);
@@ -46,16 +44,21 @@ app.get('/api/search/:code', async (req, res) => {
                 data: results
             });
         } else {
-            res.status(404).json({ success: false, message: 'الكود غير موجود' });
+            // التعديل 1: إزالة status(404) لضمان وصول الرد للمتصفح بوضوح
+            res.json({ success: false, message: 'الكود غير موجود' });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
 });
 
-const PORT = 3001;
-app.listen(PORT, () => {
-    console.log(`✅ النظام جاهز!`);
-    console.log(`➜ المحرك (Backend): http://localhost:${PORT}`);
-    console.log(`➜ رابط الموقع: http://localhost:${PORT}/index.html`);
+// --- التعديلات الجوهرية للإنترنت (Render) ---
+
+// التعديل 2: استخدام المنفذ الذي يفرضه Render تلقائياً
+const PORT = process.env.PORT || 3001; 
+
+// التعديل 3: إضافة '0.0.0.0' لفتح السيرفر للاستقبال من الإنترنت
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ النظام جاهز وعالمي الآن!`);
+    console.log(`➜ المنفذ المستخدم: ${PORT}`);
 });
