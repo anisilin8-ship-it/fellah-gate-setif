@@ -11,20 +11,17 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname)); // لتشغيل ملف index.html والصور تلقائياً
+app.use(express.static(__dirname));
 
 // دالة البحث في ملف CSV
 const findDeliveries = (targetCode) => {
     return new Promise((resolve, reject) => {
         const results = [];
         const filePath = path.join(__dirname, 'deliveries.csv');
-
-        if (!fs.existsSync(filePath)) {
-            return reject('ملف deliveries.csv غير موجود بجانب السيرفر');
-        }
+        if (!fs.existsSync(filePath)) return reject('ملف البيانات غير موجود');
 
         fs.createReadStream(filePath)
-            .pipe(csv({ separator: ';' })) // استخدام الفاصلة المنقوطة كما في ملفك
+            .pipe(csv({ separator: ';' }))
             .on('data', (row) => {
                 if (row.CodePart && row.CodePart.trim() === targetCode.trim()) {
                     results.push(row);
@@ -43,6 +40,7 @@ app.get('/api/search/:code', async (req, res) => {
             res.json({
                 success: true,
                 farmerName: results[0].Nom,
+                status: results[0].BankStatus, 
                 data: results
             });
         } else {
@@ -53,14 +51,12 @@ app.get('/api/search/:code', async (req, res) => {
     }
 });
 
-// --- إضافة رابط خريطة الموقع (Sitemap) هنا ---
+// رابط خريطة الموقع لقوقل
 app.get('/sitemap.xml', (req, res) => {
     res.sendFile(path.join(__dirname, 'sitemap.xml'));
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`✅ النظام جاهز!`);
-    console.log(`➜ المحرك (Backend): http://localhost:${PORT}`);
-    console.log(`➜ رابط الموقع: http://localhost:${PORT}/index.html`);
+    console.log(`✅ السيرفر يعمل على المنفذ ${PORT}`);
 });
