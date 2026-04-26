@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بوابة الفلاح الرقمية | CCLS Sétif</title>
+    <meta name="google-site-verification" content="D9c3GjOwDbYbsGfw8IDrTBBSYKxjrXnElEClgSf9_rA" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { 
@@ -15,7 +17,6 @@
 
         body {
             margin: 0; padding: 0;
-            /* تم ضبط اسم الصورة ليكون background.jpg ليتوافق مع GitHub */
             background: var(--dark-green) url('background.jpg') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -190,7 +191,6 @@
                 const btn = document.querySelector('button');
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحميل...';
 
-                // تم تعديل الرابط ليعمل تلقائياً على Render أو الجهاز المحلي
                 const response = await fetch(`${window.location.origin}/api/search/${code}`);
                 const result = await response.json();
 
