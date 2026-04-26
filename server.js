@@ -20,22 +20,24 @@ const findDeliveries = (targetCode) => {
         
         if (!fs.existsSync(filePath)) return reject('ملف البيانات غير موجود');
 
-        // استخدام utf-8 وقراءة السطور بدقة
         fs.createReadStream(filePath, { encoding: 'utf8' })
             .pipe(csv({ separator: ';' }))
             .on('data', (row) => {
-                // تصفية صارمة: إزالة الفراغات والتأكد من مطابقة الكود تماماً
-                const cleanRowCode = row.CodePart ? row.CodePart.toString().trim() : "";
-                const cleanTargetCode = targetCode.toString().trim();
+                // 1. استخراج الكود من السطر وتنظيفه
+                let rowCode = row.CodePart ? row.CodePart.toString().trim() : "";
 
-                if (cleanRowCode === cleanTargetCode) {
+                // 2. معالجة مشكلة التنسيق العلمي (E+14) القادمة من الإكسيل
+                // هذا الجزء يضمن تحويل 1.91E+14 إلى الرقم الكامل قبل المقارنة
+                if (rowCode.includes('E+')) {
+                    rowCode = BigInt(Math.round(Number(rowCode))).toString();
+                }
+
+                // 3. المقارنة الصارمة (لا يقبل النتيجة إلا إذا تطابق الكود تماماً)
+                if (rowCode === targetCode.trim()) {
                     results.push(row);
                 }
             })
-            .on('end', () => {
-                console.log(`تم العثور على ${results.length} سجلات للكود: ${targetCode}`);
-                resolve(results);
-            })
+            .on('end', () => resolve(results))
             .on('error', (err) => reject(err));
     });
 };
@@ -44,7 +46,6 @@ app.get('/api/search/:code', async (req, res) => {
     try {
         const results = await findDeliveries(req.params.code);
         if (results.length > 0) {
-            // نأخذ الاسم من أول نتيجة صحيحة فقط
             res.json({
                 success: true,
                 farmerName: results[0].Nom,
@@ -54,7 +55,6 @@ app.get('/api/search/:code', async (req, res) => {
             res.status(404).json({ success: false, message: 'الكود غير موجود' });
         }
     } catch (error) {
-        console.error("خطأ في البحث:", error);
         res.status(500).json({ success: false, message: error.message });
     }
 });
@@ -65,5 +65,5 @@ app.get('/sitemap.xml', (req, res) => {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`✅ السيرفر يعمل على المنفذ ${PORT}`);
+    console.log(`✅ السيرفر يعمل بنجاح على المنفذ ${PORT}`);
 });
