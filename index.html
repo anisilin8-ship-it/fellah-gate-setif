@@ -32,22 +32,16 @@
             width: 100%; max-width: 500px; text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.7);
         }
 
-        .typewriter-container {
-            min-height: 70px; display: flex; justify-content: center; align-items: center;
-        }
-
         .main-title { 
             font-size: clamp(1.8rem, 8vw, 2.8rem); font-weight: 900; color: var(--gold); 
             margin: 0; text-shadow: var(--glow); border-left: 4px solid var(--gold);
             white-space: nowrap; overflow: hidden; width: 0;
-            animation: typing 4s steps(20) infinite alternate, cursorBlink 0.5s step-end infinite;
+            animation: typing 4s steps(20) infinite alternate;
         }
 
         @keyframes typing { 0% { width: 0; } 50% { width: 100%; } 100% { width: 0; } }
-        @keyframes cursorBlink { 50% { border-color: transparent } }
 
         .brand-icon { font-size: 5rem; color: var(--gold); margin-bottom: 10px; filter: drop-shadow(var(--glow)); }
-        
         .sub-title { font-size: 1.5rem; color: #fff; margin-bottom: 5px; display: block; font-weight: 800; }
 
         .season-badge {
@@ -56,20 +50,16 @@
             font-size: 1rem; font-weight: bold; margin-bottom: 30px; box-shadow: var(--glow);
         }
 
-        .input-wrapper { text-align: right; margin-bottom: 20px; }
-        .input-wrapper label { color: var(--gold); font-weight: bold; margin-right: 10px; font-size: 1.1rem; }
-
         .modern-input {
             width: 100%; padding: 20px; background: rgba(255, 255, 255, 0.08);
             border: 2px solid var(--border); border-radius: 20px; color: white;
-            font-size: 1.4rem; text-align: center; transition: 0.4s; box-sizing: border-box;
+            font-size: 1.4rem; text-align: center; box-sizing: border-box;
         }
-        .modern-input:focus { border-color: var(--gold); box-shadow: var(--glow); outline: none; }
 
         .btn-action {
             width: 100%; background: linear-gradient(135deg, var(--emerald), #059669);
             color: white; border: none; padding: 18px; border-radius: 20px;
-            font-size: 1.4rem; font-weight: 900; cursor: pointer; transition: 0.3s; margin-top: 10px;
+            font-size: 1.4rem; font-weight: 900; cursor: pointer; transition: 0.3s;
         }
 
         .results-view { display: none; width: 100%; max-width: 900px; background: var(--glass-deep); backdrop-filter: blur(35px); border-radius: 35px; padding: 25px; border: 1px solid var(--border); }
@@ -79,28 +69,22 @@
             border-bottom: 2px solid var(--gold); text-align: right; margin-bottom: 25px; 
             display: flex; justify-content: space-between; align-items: center;
         }
-        .info-item { display: flex; flex-direction: column; }
-        .info-label { color: var(--gold); font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; }
-        .info-value { font-size: 1.2rem; font-weight: 800; }
 
         .table-res { width: 100%; overflow-x: auto; border-radius: 18px; }
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
         th { background: rgba(251, 191, 36, 0.15); color: var(--gold); padding: 15px; font-weight: 900; }
-        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; font-weight: 500; }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; }
 
         .footer-premium {
             position: fixed; bottom: 0; width: 100%;
             background: rgba(0, 0, 0, 0.98); border-top: 3px solid var(--gold); z-index: 2000;
         }
-        .footer-top-row {
-            display: flex; justify-content: space-around; align-items: center;
-            padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
+
+        .footer-top-row { display: flex; justify-content: space-around; align-items: center; padding: 12px; }
         .time-box { font-size: 1rem; font-weight: 800; color: var(--gold); }
-        .weather-box { font-size: 1rem; color: white; font-weight: bold; }
 
         .ticker-new { padding: 8px 0; overflow: hidden; background: rgba(251, 191, 36, 0.04); }
-        .ticker-content { display: inline-block; white-space: nowrap; animation: ticker-smooth 30s linear infinite; font-size: 0.95rem; font-weight: 500; }
+        .ticker-content { display: inline-block; white-space: nowrap; animation: ticker-smooth 30s linear infinite; font-size: 0.95rem; }
         @keyframes ticker-smooth { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     </style>
 </head>
@@ -109,66 +93,41 @@
     <div class="page-container">
         <div class="glass-panel" id="entry-card">
             <div class="brand-icon"><i class="fa-solid fa-wheat-awn"></i></div>
-            
-            <div class="typewriter-container">
-                <h1 class="main-title">بوابة الفلاح سطيف</h1>
-            </div>
-            
+            <div style="min-height: 70px; display: flex; justify-content: center;"><h1 class="main-title">بوابة الفلاح سطيف</h1></div>
             <span class="sub-title">البوابة الرقمية للفلاح</span>
             <div class="season-badge">موسم الحصاد والدرس 2025/2026</div>
-
-            <div class="input-wrapper">
-                <label>كود الشريك:</label>
-                <input type="text" id="pCode" class="modern-input" placeholder="أدخل رقم الشريك">
-            </div>
-
+            <input type="text" id="pCode" class="modern-input" placeholder="أدخل رقم الشريك" style="margin-bottom: 20px;">
             <button class="btn-action" onclick="fetchData()" id="searchBtn">بـحـث</button>
-
-            <a href="https://www.facebook.com/people/CCLS-Setif/100065090058465/" target="_blank" 
-               style="color: #60a5fa; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 30px; font-weight: bold;">
-               <i class="fa-brands fa-facebook"></i> الصفحة الرسمية لتعاونية سطيف
-            </a>
         </div>
 
         <div class="results-view" id="results-card">
             <h2 style="color: var(--gold); text-align: center; margin-bottom: 25px;"><i class="fa-solid fa-receipt"></i> كشف المستحقات المالية</h2>
-            
             <div id="farmer-profile-header" class="farmer-info-header"></div>
-
             <div class="table-res">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>N BON</th><th>التاريخ</th><th>المنتج</th><th>الكمية</th><th>حالة الدفع</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>N BON</th><th>التاريخ</th><th>المنتج</th><th>الكمية</th><th>حالة الدفع</th></tr></thead>
                     <tbody id="table-body"></tbody>
                 </table>
             </div>
-            <div style="text-align: center;">
-                <button class="btn-action" onclick="location.reload()" style="background: #374151; margin-top: 30px; width: auto; padding: 12px 60px;">خروج</button>
-            </div>
+            <button class="btn-action" onclick="location.reload()" style="background: #374151; margin-top: 30px;">خروج</button>
         </div>
     </div>
 
     <div class="footer-premium">
         <div class="footer-top-row">
             <div class="time-box" id="clock"></div>
-            <div class="weather-box"><i class="fa-solid fa-sun" style="color: var(--gold);"></i> سطيف: 18°C</div>
+            <div style="color: white; font-weight: bold;"><i class="fa-solid fa-sun" style="color: var(--gold);"></i> سطيف: 18°C</div>
         </div>
         <div class="ticker-new">
-            <div class="ticker-content">
-                 🌾 مرحبا بكم في البوابة الرسمية لتعاونية الحبوب والبقول الجافة لولاية سطيف .. نحن نعمل لتسهيل وصولكم للمعلومات المالية بدقة وسرعة .. المقر: 56 شارع 1 نوفمبر 1954، سطيف .. الهاتف: 036.53.84.15
-            </div>
+            <div class="ticker-content">🌾 مرحبا بكم في البوابة الرسمية لتعاونية الحبوب لولاية سطيف .. الهاتف: 036.53.84.15</div>
         </div>
     </div>
 
     <script>
         function updateClock() {
             const now = new Date();
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-            const date = now.toLocaleDateString('ar-DZ', options);
-            const time = now.toLocaleTimeString('ar-DZ', {hour: '2-digit', minute:'2-digit'});
+            const date = now.toLocaleDateString('ar-DZ', {day:'numeric', month:'long', year:'numeric'});
+            const time = now.toLocaleTimeString('ar-DZ', {hour:'2-digit', minute:'2-digit'});
             document.getElementById('clock').innerHTML = `<i class="fa-regular fa-clock"></i> ${time} | ${date}`;
         }
         setInterval(updateClock, 1000); updateClock();
@@ -176,7 +135,7 @@
         async function fetchData() {
             const code = document.getElementById('pCode').value.trim();
             const btn = document.getElementById('searchBtn');
-            if(!code) { alert("يرجى إدخال الكود"); return; }
+            if(!code) return;
             try {
                 btn.innerHTML = 'جاري التحميل...';
                 const res = await fetch(`${window.location.origin}/api/search/${code}`);
@@ -184,23 +143,15 @@
                 if(result.success) {
                     document.getElementById('entry-card').style.display = 'none';
                     document.getElementById('results-card').style.display = 'block';
-                    
                     document.getElementById('farmer-profile-header').innerHTML = `
-                        <div class="info-item">
-                            <span class="info-label">اسم الفلاح:</span>
-                            <span class="info-value">${result.farmerName}</span>
-                        </div>
-                        <div class="info-item" style="text-align: left;">
-                            <span class="info-label">كود الشريك:</span>
-                            <span class="info-value" style="color: var(--gold);">${code}</span>
-                        </div>
+                        <div><span style="color:var(--gold)">اسم الفلاح:</span> <br> <b>${result.farmerName}</b></div>
+                        <div style="text-align:left;"><span style="color:var(--gold)">كود الشريك:</span> <br> <b>${code}</b></div>
                     `;
-
                     let html = "";
                     result.data.forEach(item => {
                         const paid = item.bankstatus && item.bankstatus.toString().trim() === "1";
                         html += `<tr>
-                            <td style="font-weight:bold;">${item["No Bon"]}</td>
+                            <td>${item["No Bon"]}</td>
                             <td>${item["Date Bon"]}</td>
                             <td>${item["Produit"]}</td>
                             <td style="color:var(--gold); font-weight:bold;">${item["qte"]}</td>
@@ -208,9 +159,8 @@
                         </tr>`;
                     });
                     document.getElementById('table-body').innerHTML = html;
-                    window.scrollTo(0,0);
                 } else { alert("الكود غير موجود"); btn.innerHTML = "بـحـث"; }
-            } catch(e) { alert("خطأ في الاتصال"); }
+            } catch(e) { alert("خطأ في الاتصال"); btn.innerHTML = "بـحـث"; }
         }
     </script>
 </body>
