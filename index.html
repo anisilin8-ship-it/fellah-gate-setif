@@ -10,9 +10,9 @@
         :root { 
             --gold: #fbbf24; 
             --emerald: #10b981; 
-            --glass-deep: rgba(0, 0, 0, 0.75);
+            --glass-deep: rgba(0, 0, 0, 0.8);
             --border: rgba(255, 255, 255, 0.15);
-            --glow: 0 0 20px rgba(251, 191, 36, 0.3);
+            --glow: 0 0 20px rgba(251, 191, 36, 0.4);
         }
 
         html, body {
@@ -23,44 +23,45 @@
 
         .page-container {
             display: flex; flex-direction: column; align-items: center; min-height: 100vh;
-            padding: 40px 15px 140px 15px; box-sizing: border-box;
+            padding: 20px 15px 160px 15px; box-sizing: border-box;
         }
 
         .glass-panel {
             background: var(--glass-deep); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--border); border-radius: 35px; padding: 45px 30px;
+            border: 1px solid var(--border); border-radius: 35px; padding: 35px 25px;
             width: 100%; max-width: 500px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.6);
             position: relative; overflow: hidden;
         }
 
-        /* تأثير العنوان المتحرك (يكتب ويتمحى) */
         .typewriter-container {
-            min-height: 80px; /* يحافظ على مسافة العنوان */
-            display: flex; justify-content: center; align-items: center;
+            min-height: 70px; display: flex; justify-content: center; align-items: center;
         }
 
         .main-title { 
-            font-size: 2.8rem; font-weight: 900; color: var(--gold); 
-            margin: 0; text-shadow: var(--glow);
-            border-left: 3px solid var(--gold); /* مؤشر الكتابة */
-            white-space: nowrap; overflow: hidden;
-            width: 0; /* يبدأ من الصفر */
+            font-size: clamp(1.8rem, 8vw, 2.8rem); font-weight: 900; color: var(--gold); 
+            margin: 0; text-shadow: var(--glow); border-left: 3px solid var(--gold);
+            white-space: nowrap; overflow: hidden; width: 0;
             animation: typing 4s steps(20) infinite alternate, blink 0.5s step-end infinite;
         }
 
-        @keyframes typing {
-            0% { width: 0; }
-            50% { width: 100%; } /* يكتب العنوان */
-            100% { width: 0; } /* يمسح العنوان */
-        }
-
+        @keyframes typing { 0% { width: 0; } 50% { width: 100%; } 100% { width: 0; } }
         @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--gold); } }
 
-        .brand-icon { font-size: 4rem; color: var(--gold); margin-bottom: 10px; filter: drop-shadow(var(--glow)); }
-        .sub-title { font-size: 1.2rem; color: #cbd5e1; margin-bottom: 30px; display: block; }
+        .brand-icon { font-size: 4.5rem; color: var(--gold); margin-bottom: 10px; filter: drop-shadow(var(--glow)); }
+        
+        .sub-title { 
+            font-size: 1.4rem; color: #fff; margin-bottom: 5px; display: block; font-weight: 800;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        .season-badge {
+            display: inline-block; padding: 5px 15px; background: rgba(251, 191, 36, 0.1);
+            border: 1px solid var(--gold); border-radius: 20px; color: var(--gold);
+            font-size: 0.9rem; font-weight: bold; margin-bottom: 25px; backdrop-filter: blur(5px);
+        }
 
         .modern-input {
-            width: 100%; padding: 18px; background: rgba(255, 255, 255, 0.05);
+            width: 100%; padding: 18px; background: rgba(255, 255, 255, 0.08);
             border: 2px solid var(--border); border-radius: 18px; color: white;
             font-size: 1.3rem; text-align: center; transition: 0.4s; box-sizing: border-box;
         }
@@ -69,59 +70,58 @@
         .btn-action {
             width: 100%; background: linear-gradient(135deg, var(--emerald), #059669);
             color: white; border: none; padding: 18px; border-radius: 18px;
-            font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: 0.3s;
+            font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px;
         }
 
-        /* شريط سفلي مطور بالكامل */
+        /* النتائج */
+        .results-view { display: none; width: 100%; max-width: 850px; background: var(--glass-deep); backdrop-filter: blur(30px); border-radius: 30px; padding: 20px; border: 1px solid var(--border); }
+        .farmer-profile { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; border-right: 6px solid var(--gold); text-align: right; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; }
+        .table-res { width: 100%; overflow-x: auto; border-radius: 15px; -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; min-width: 550px; }
+        th { background: rgba(251, 191, 36, 0.2); color: var(--gold); padding: 12px; font-size: 0.9rem; }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; font-size: 0.9rem; }
+
+        /* الشريط السفلي */
         .footer-premium {
             position: fixed; bottom: 0; width: 100%;
             background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px);
             border-top: 3px solid var(--gold); z-index: 2000;
         }
-
         .footer-top-row {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
+        .time-box { font-size: 0.9rem; font-weight: bold; color: var(--gold); font-family: 'Courier New', Courier, monospace; }
+        .weather-box { font-size: 0.9rem; color: white; font-weight: bold; }
 
-        .time-box { font-size: 1rem; font-weight: bold; color: var(--gold); display: flex; align-items: center; gap: 8px; }
-        .weather-box { font-size: 1rem; color: white; font-weight: bold; }
-
-        .ticker-new { padding: 8px 0; overflow: hidden; background: rgba(251, 191, 36, 0.05); }
-        .ticker-content { display: inline-block; white-space: nowrap; animation: ticker-smooth 25s linear infinite; font-size: 0.95rem; }
+        .ticker-new { padding: 6px 0; overflow: hidden; background: rgba(251, 191, 36, 0.05); }
+        .ticker-content { display: inline-block; white-space: nowrap; animation: ticker-smooth 30s linear infinite; font-size: 0.85rem; }
         @keyframes ticker-smooth { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
-        /* نتائج البحث */
-        .results-view { display: none; width: 100%; max-width: 850px; background: var(--glass-deep); backdrop-filter: blur(30px); border-radius: 30px; padding: 25px; border: 1px solid var(--border); }
-        .farmer-profile { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; border-right: 6px solid var(--gold); text-align: right; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; }
-        .table-res { width: 100%; overflow-x: auto; border-radius: 15px; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th { background: rgba(251, 191, 36, 0.2); color: var(--gold); padding: 12px; }
-        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="page-container">
         <div class="glass-panel" id="entry-card">
-            <div class="brand-icon"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i></div>
+            <div class="brand-icon"><i class="fa-solid fa-wheat-awn"></i></div>
             
             <div class="typewriter-container">
                 <h1 class="main-title">بوابة الفلاح سطيف</h1>
             </div>
             
-            <span class="sub-title">البوابة الرقمية التفاعلية</span>
+            <span class="sub-title">البوابة الرقمية للفلاح</span>
+            <div class="season-badge">Saison de Moisson 2025/2026</div>
 
-            <div style="text-align: right; margin-bottom: 20px;">
-                <label style="color: var(--gold); font-weight: bold; margin-right: 10px;">كود الشريك:</label>
+            <div style="text-align: right; margin-bottom: 15px;">
+                <label style="color: var(--gold); font-weight: bold; margin-right: 10px;">Code Partenaire :</label>
                 <input type="text" id="pCode" class="modern-input" placeholder="أدخل كود الشريك">
             </div>
 
             <button class="btn-action" onclick="fetchData()" id="searchBtn">دخول البوابة</button>
 
             <a href="https://www.facebook.com/people/CCLS-Setif/100065090058465/" target="_blank" 
-               style="color: #60a5fa; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 25px; font-weight: bold;">
-               <i class="fa-brands fa-facebook"></i> تابعونا على الفيسبوك
+               style="color: #60a5fa; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 25px; font-weight: bold; font-size: 0.9rem;">
+               <i class="fa-brands fa-facebook"></i> CCLS Sétif Officiel
             </a>
         </div>
 
@@ -138,18 +138,18 @@
                     <tbody id="table-body"></tbody>
                 </table>
             </div>
-            <button class="btn-action" onclick="location.reload()" style="background: #374151; margin-top: 20px; width: auto; padding: 12px 40px;">خروج</button>
+            <button class="btn-action" onclick="location.reload()" style="background: #374151; margin-top: 20px; width: auto; padding: 10px 30px;">Retour / خروج</button>
         </div>
     </div>
 
     <div class="footer-premium">
         <div class="footer-top-row">
             <div class="time-box" id="clock"></div>
-            <div class="weather-box"><i class="fa-solid fa-sun" style="color: var(--gold);"></i> سطيف: 18°C</div>
+            <div class="weather-box"><i class="fa-solid fa-sun" style="color: var(--gold);"></i> Sétif: 18°C</div>
         </div>
         <div class="ticker-new">
             <div class="ticker-content">
-                 🌾 مرحبا بك يا فلاح في البوابة الرسمية لتعاونية الحبوب لولاية سطيف .. نحن نعمل دائماً لخدمتكم .. المقر: 56 شارع 1 نوفمبر 1954، سطيف .. الهاتف: 036.53.84.15
+                 🌾 Bienvenue sur la plateforme officielle de la CCLS Sétif .. Nous travaillons pour vous faciliter l'accès à vos informations .. Adresse: 56 Rue 1er Novembre 1954, Sétif .. Contact: 036.53.84.15
             </div>
         </div>
     </div>
@@ -157,8 +157,10 @@
     <script>
         function updateClock() {
             const now = new Date();
-            const time = now.toLocaleTimeString('ar-DZ', {hour: '2-digit', minute:'2-digit'});
-            const date = now.toLocaleDateString('ar-DZ', {day:'numeric', month:'short'});
+            // الوقت والتاريخ بالفرنسية
+            const options = { weekday: 'short', day: 'numeric', month: 'short' };
+            const date = now.toLocaleDateString('fr-FR', options);
+            const time = now.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit', second:'2-digit'});
             document.getElementById('clock').innerHTML = `<i class="fa-regular fa-clock"></i> ${time} | ${date}`;
         }
         setInterval(updateClock, 1000); updateClock();
@@ -168,22 +170,22 @@
             const btn = document.getElementById('searchBtn');
             if(!code) { alert("يرجى إدخال الكود"); return; }
             try {
-                btn.innerHTML = 'جاري التحميل...';
+                btn.innerHTML = 'Chargement...';
                 const res = await fetch(`${window.location.origin}/api/search/${code}`);
                 const result = await res.json();
                 if(result.success) {
                     document.getElementById('entry-card').style.display = 'none';
                     document.getElementById('results-card').style.display = 'block';
-                    document.getElementById('farmer-profile').innerHTML = `<div><b>الاسم:</b> ${result.farmerName}</div><div><b>الكود:</b> ${code}</div>`;
+                    document.getElementById('farmer-profile').innerHTML = `<div><b>Nom:</b> ${result.farmerName}</div><div><b>Code:</b> ${code}</div>`;
                     let html = "";
                     result.data.forEach(item => {
                         const paid = item.bankstatus && item.bankstatus.toString().trim() === "1";
-                        html += `<tr><td>${item["No Bon"]}</td><td>${item["Date Bon"]}</td><td>${item["Produit"]}</td><td style="color:var(--gold); font-weight:bold;">${item["qte"]}</td><td><span style="color:${paid ? '#10b981' : '#fbbf24'}; font-weight:bold;">${paid ? 'تم الدفع' : 'قيد المعالجة'}</span></td></tr>`;
+                        html += `<tr><td>${item["No Bon"]}</td><td>${item["Date Bon"]}</td><td>${item["Produit"]}</td><td style="color:var(--gold); font-weight:bold;">${item["qte"]}</td><td><span style="color:${paid ? '#10b981' : '#fbbf24'}; font-weight:bold;">${paid ? 'Payé' : 'En cours'}</span></td></tr>`;
                     });
                     document.getElementById('table-body').innerHTML = html;
                     window.scrollTo(0,0);
-                } else { alert("الكود غير موجود"); btn.innerHTML = "دخول البوابة"; }
-            } catch(e) { alert("خطأ في الاتصال"); }
+                } else { alert("Code incorrect"); btn.innerHTML = "دخول البوابة"; }
+            } catch(e) { alert("Erreur de connexion"); }
         }
     </script>
 </body>
