@@ -20,20 +20,24 @@ const findDeliveries = (targetCode) => {
         
         if (!fs.existsSync(filePath)) return reject('ملف البيانات غير موجود');
 
-        // استخدام الفاصلة العادية وتجاهل علامات الاقتباس تلقائياً
         fs.createReadStream(filePath, { encoding: 'utf8' })
-            .pipe(csv({ separator: ',' })) 
+            .pipe(csv({ 
+                separator: ',',
+                mapHeaders: ({ header }) => header.replace(/['"]+/g, '').trim() 
+            })) 
             .on('data', (row) => {
-                // تنظيف كود الشريك من أي فراغات أو رموز زائدة
-                let rowCode = row.CodePart ? row.CodePart.toString().trim() : "";
+                let rowCode = row.CodePart ? row.CodePart.toString().replace(/['"]+/g, '').trim() : "";
 
-                // معالجة التنسيق العلمي (E+14) في حال وجوده
                 if (rowCode.includes('E+')) {
-                    rowCode = BigInt(Math.round(Number(rowCode))).toString();
+                    try {
+                        rowCode = BigInt(Math.round(Number(rowCode))).toString();
+                    } catch(e) {}
                 }
 
-                // مطابقة الكود المدخل مع الكود في السطر
                 if (rowCode === targetCode.trim()) {
+                    Object.keys(row).forEach(key => {
+                        if(typeof row[key] === 'string') row[key] = row[key].replace(/['"]+/g, '').trim();
+                    });
                     results.push(row);
                 }
             })
@@ -48,7 +52,7 @@ app.get('/api/search/:code', async (req, res) => {
         if (results.length > 0) {
             res.json({
                 success: true,
-                farmerName: results[0].nom, // مطابقة لعمود nom في ملفك
+                farmerName: results[0].nom,
                 data: results
             });
         } else {
