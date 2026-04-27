@@ -27,14 +27,14 @@ const findDeliveries = (targetCode) => {
             })) 
             .on('data', (row) => {
                 let rowCode = row.CodePart ? row.CodePart.toString().replace(/['"]+/g, '').trim() : "";
-
+                
+                // معالجة الأرقام العلمية الطويلة
                 if (rowCode.includes('E+')) {
-                    try {
-                        rowCode = BigInt(Math.round(Number(rowCode))).toString();
-                    } catch(e) {}
+                    try { rowCode = BigInt(Math.round(Number(rowCode))).toString(); } catch(e) {}
                 }
 
                 if (rowCode === targetCode.trim()) {
+                    // تنظيف جميع القيم في السطر من علامات الاقتباس
                     Object.keys(row).forEach(key => {
                         if(typeof row[key] === 'string') row[key] = row[key].replace(/['"]+/g, '').trim();
                     });
@@ -64,6 +64,4 @@ app.get('/api/search/:code', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`✅ السيرفر يعمل بنجاح على المنفذ ${PORT}`);
-});
+app.listen(PORT, () => { console.log(`✅ السيرفر يعمل على المنفذ ${PORT}`); });
