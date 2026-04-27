@@ -72,10 +72,8 @@
             font-size: 1.4rem; font-weight: 900; cursor: pointer; transition: 0.3s; margin-top: 10px;
         }
 
-        /* واجهة النتائج */
         .results-view { display: none; width: 100%; max-width: 900px; background: var(--glass-deep); backdrop-filter: blur(35px); border-radius: 35px; padding: 25px; border: 1px solid var(--border); }
         
-        /* الاسم والكود في جهتين مختلفتين */
         .farmer-info-header { 
             background: rgba(255,255,255,0.06); padding: 20px; border-radius: 20px; 
             border-bottom: 2px solid var(--gold); text-align: right; margin-bottom: 25px; 
@@ -90,7 +88,6 @@
         th { background: rgba(251, 191, 36, 0.15); color: var(--gold); padding: 15px; font-weight: 900; }
         td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; font-weight: 500; }
 
-        /* الشريط السفلي */
         .footer-premium {
             position: fixed; bottom: 0; width: 100%;
             background: rgba(0, 0, 0, 0.98); border-top: 3px solid var(--gold); z-index: 2000;
@@ -169,7 +166,6 @@
     <script>
         function updateClock() {
             const now = new Date();
-            // ضبط التاريخ ليظهر باللغة العربية (أفريل)
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
             const date = now.toLocaleDateString('ar-DZ', options);
             const time = now.toLocaleTimeString('ar-DZ', {hour: '2-digit', minute:'2-digit'});
@@ -189,7 +185,6 @@
                     document.getElementById('entry-card').style.display = 'none';
                     document.getElementById('results-card').style.display = 'block';
                     
-                    // توزيع الاسم والكود في جهتين
                     document.getElementById('farmer-profile-header').innerHTML = `
                         <div class="info-item">
                             <span class="info-label">اسم الفلاح:</span>
@@ -203,19 +198,28 @@
 
                     let html = "";
                     result.data.forEach(item => {
-                        const paid = item.bankstatus && item.bankstatus.toString().trim() === "1";
+                        // تعديل منطق التحقق لضمان قراءة القيمة 1 من ملف الـ Excel بشكل صحيح
+                        const rawStatus = item.bankstatus ? item.bankstatus.toString().trim() : "";
+                        const isPaid = (rawStatus === "1" || item.bankstatus == 1);
+
                         html += `<tr>
                             <td style="font-weight:bold;">${item["No Bon"]}</td>
                             <td>${item["Date Bon"]}</td>
                             <td>${item["Produit"]}</td>
                             <td style="color:var(--gold); font-weight:bold;">${item["qte"]}</td>
-                            <td><span style="color:${paid ? '#10b981' : '#fbbf24'}; font-weight:bold;">${paid ? 'تم الدفع ✓' : 'قيد المعالجة ⏳'}</span></td>
+                            <td><span style="color:${isPaid ? '#10b981' : '#fbbf24'}; font-weight:bold;">${isPaid ? 'تم الدفع ✓' : 'قيد المعالجة ⏳'}</span></td>
                         </tr>`;
                     });
                     document.getElementById('table-body').innerHTML = html;
                     window.scrollTo(0,0);
-                } else { alert("الكود غير موجود"); btn.innerHTML = "بـحـث"; }
-            } catch(e) { alert("خطأ في الاتصال"); }
+                } else { 
+                    alert("الكود غير موجود"); 
+                    btn.innerHTML = "بـحـث"; 
+                }
+            } catch(e) { 
+                alert("خطأ في الاتصال"); 
+                btn.innerHTML = "بـحـث";
+            }
         }
     </script>
 </body>
